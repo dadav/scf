@@ -1,0 +1,7 @@
+[cache]
+# Path where the cache will be stored
+path = "@format {env[HOME]}/.cache/"
+# Number of days the entries should be cached by default
+expiration_days = 7
+# Never expire the cache for the following CVE. You can use Wildcards here.
+expiration_exceptions = [ "CVE-200*", "CVE-201*", ]

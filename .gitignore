@@ -1,3 +1,6 @@
 __pycache__
 *.py[co]
 venv
+*.egg-info
+dist
+.tox

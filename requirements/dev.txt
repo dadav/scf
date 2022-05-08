@@ -4,98 +4,229 @@
 #
 #    pip-compile requirements/dev.in
 #
+alabaster==0.7.12
+    # via sphinx
 anyio==3.5.0
-    # via starlette
-astroid==2.11.4
-    # via pylint
+    # via
+    #   starlette
+    #   watchgod
+appdirs==1.4.4
+    # via requests-cache
+asgiref==3.5.1
+    # via uvicorn
 attrs==21.4.0
-    # via pytest
+    # via
+    #   cattrs
+    #   pytest
+    #   requests-cache
+babel==2.10.1
+    # via sphinx
 beautifulsoup4==4.11.1
-    # via -r requirements/../requirements.in
-black==22.3.0
-    # via -r requirements/style.in
+    # via
+    #   -r requirements/../requirements.in
+    #   furo
+build==0.7.0
+    # via -r requirements/build.in
+cattrs==1.10.0
+    # via requests-cache
 certifi==2021.10.8
     # via requests
 charset-normalizer==2.0.12
     # via requests
 click==8.1.3
     # via
-    #   black
     #   pip-tools
+    #   typer
+    #   uvicorn
 commonmark==0.9.1
     # via rich
-dill==0.3.4
-    # via pylint
-fastapi==0.76.0
+coverage[toml]==6.3.3
+    # via pytest-cov
+distlib==0.3.4
+    # via virtualenv
+docutils==0.17.1
+    # via
+    #   myst-parser
+    #   sphinx
+dynaconf==3.1.8
     # via -r requirements/../requirements.in
+fastapi==0.77.1
+    # via -r requirements/../requirements.in
+filelock==3.6.0
+    # via
+    #   tox
+    #   virtualenv
+flake8==4.0.1
+    # via -r requirements/style.in
+furo==2022.4.7
+    # via -r requirements/docs.in
+h11==0.13.0
+    # via uvicorn
+httptools==0.4.0
+    # via uvicorn
 idna==3.3
     # via
     #   anyio
     #   requests
+imagesize==1.3.0
+    # via sphinx
 iniconfig==1.1.1
     # via pytest
-isort==5.10.1
-    # via pylint
-lazy-object-proxy==1.7.1
-    # via astroid
-mccabe==0.7.0
-    # via pylint
-mypy-extensions==0.4.3
-    # via black
+jinja2==3.1.2
+    # via
+    #   myst-parser
+    #   sphinx
+markdown-it-py==2.1.0
+    # via
+    #   mdit-py-plugins
+    #   myst-parser
+markupsafe==2.1.1
+    # via jinja2
+mccabe==0.6.1
+    # via flake8
+mdit-py-plugins==0.3.0
+    # via myst-parser
+mdurl==0.1.1
+    # via markdown-it-py
+myst-parser==0.17.2
+    # via -r requirements/docs.in
 packaging==21.3
-    # via pytest
-pathspec==0.9.0
-    # via black
+    # via
+    #   build
+    #   pytest
+    #   sphinx
+    #   tox
 pep517==0.12.0
-    # via pip-tools
+    # via
+    #   build
+    #   pip-tools
 pip-tools==6.6.0
     # via -r requirements/dev.in
 platformdirs==2.5.2
-    # via
-    #   black
-    #   pylint
+    # via virtualenv
 pluggy==1.0.0
-    # via pytest
+    # via
+    #   pytest
+    #   tox
 py==1.11.0
-    # via pytest
+    # via
+    #   pytest
+    #   tox
+pycodestyle==2.8.0
+    # via flake8
 pydantic==1.9.0
     # via
     #   -r requirements/../requirements.in
     #   fastapi
+pyflakes==2.4.0
+    # via flake8
 pygments==2.12.0
-    # via rich
-pylint==2.13.8
-    # via -r requirements/style.in
+    # via
+    #   furo
+    #   rich
+    #   sphinx
 pyparsing==3.0.8
     # via packaging
 pytest==7.1.2
+    # via
+    #   -r requirements/tests.in
+    #   pytest-cov
+pytest-cov==3.0.0
     # via -r requirements/tests.in
 python-dotenv==0.20.0
-    # via -r requirements/../requirements.in
+    # via
+    #   -r requirements/../requirements.in
+    #   uvicorn
+pytz==2022.1
+    # via babel
+pyyaml==6.0
+    # via
+    #   myst-parser
+    #   uvicorn
 requests==2.27.1
+    # via
+    #   -r requirements/../requirements.in
+    #   requests-cache
+    #   sphinx
+requests-cache==0.9.4
     # via -r requirements/../requirements.in
 rich==12.4.1
     # via -r requirements/../requirements.in
+six==1.16.0
+    # via
+    #   tox
+    #   url-normalize
+    #   virtualenv
 sniffio==1.2.0
     # via anyio
+snowballstemmer==2.2.0
+    # via sphinx
 soupsieve==2.3.2.post1
     # via beautifulsoup4
-starlette==0.18.0
+sphinx==4.5.0
+    # via
+    #   -r requirements/docs.in
+    #   furo
+    #   myst-parser
+    #   sphinx-copybutton
+    #   sphinxcontrib-log-cabinet
+    #   sphinxcontrib-programoutput
+sphinx-copybutton==0.5.0
+    # via -r requirements/docs.in
+sphinxcontrib-applehelp==1.0.2
+    # via sphinx
+sphinxcontrib-devhelp==1.0.2
+    # via sphinx
+sphinxcontrib-htmlhelp==2.0.0
+    # via sphinx
+sphinxcontrib-jsmath==1.0.1
+    # via sphinx
+sphinxcontrib-log-cabinet==1.0.1
+    # via -r requirements/docs.in
+sphinxcontrib-programoutput==0.17
+    # via -r requirements/docs.in
+sphinxcontrib-qthelp==1.0.3
+    # via sphinx
+sphinxcontrib-serializinghtml==1.1.5
+    # via sphinx
+starlette==0.19.1
     # via fastapi
+toml==0.10.2
+    # via
+    #   -r requirements/../requirements.in
+    #   tox
 tomli==2.0.1
     # via
-    #   black
+    #   build
+    #   coverage
     #   pep517
-    #   pylint
     #   pytest
+tox==3.25.0
+    # via -r requirements/dev.in
+typer==0.4.1
+    # via -r requirements/../requirements.in
 typing-extensions==4.2.0
-    # via pydantic
+    # via
+    #   myst-parser
+    #   pydantic
+url-normalize==1.4.3
+    # via requests-cache
 urllib3==1.26.9
-    # via requests
+    # via
+    #   requests
+    #   requests-cache
+uvicorn[standard]==0.17.6
+    # via -r requirements/../requirements.in
+uvloop==0.16.0
+    # via uvicorn
+virtualenv==20.14.1
+    # via tox
+watchgod==0.8.2
+    # via uvicorn
+websockets==10.3
+    # via uvicorn
 wheel==0.37.1
     # via pip-tools
-wrapt==1.14.1
-    # via astroid
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip

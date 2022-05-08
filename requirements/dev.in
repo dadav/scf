@@ -1,4 +1,7 @@
 -r ../requirements.in
 -r tests.in
 -r style.in
+-r build.in
+-r docs.in
 pip-tools
+tox

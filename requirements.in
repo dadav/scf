@@ -1,6 +1,11 @@
 requests
+requests-cache
 beautifulsoup4
-rich
 fastapi
 pydantic
 python-dotenv
+typer
+uvicorn[standard]
+rich
+dynaconf
+toml
