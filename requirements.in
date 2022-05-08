@@ -1,0 +1,6 @@
+requests
+beautifulsoup4
+rich
+fastapi
+pydantic
+python-dotenv

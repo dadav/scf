@@ -1,0 +1,4 @@
+-r ../requirements.in
+-r tests.in
+-r style.in
+pip-tools
