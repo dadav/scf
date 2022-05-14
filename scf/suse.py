@@ -2,7 +2,7 @@
 Contains the code to fetch the informations from suse.com
 """
 import re
-from typing import Dict
+from typing import Dict, DefaultDict
 from pathlib import Path
 from datetime import timedelta
 from collections import defaultdict
@@ -39,10 +39,13 @@ def url_to_soup(url: str, timeout: int = 30, use_cache: bool = True):
     """
     Fetches the html and returns a beautifulsoup instance
     """
-    if use_cache:
-        res = Cache.instance().get(url, timeout=timeout)
-    else:
-        res = r.get(url, timeout=timeout)
+
+    cache = Cache.instance()
+
+    if not use_cache:
+        cache.cache.delete_url(url)
+
+    res = cache.get(url, timeout=timeout)
 
     res.raise_for_status()
 
@@ -56,8 +59,8 @@ def list_cve_by_year(timeout: int = 30, use_cache: bool = False) -> Dict[str, li
     Returns a dict with the years as keys and the cves as values in a list
     """
     soup = url_to_soup(SUSE_CVE_LIST_URL, timeout=timeout, use_cache=use_cache)
-    current_year = None
-    cve_list = defaultdict(list)
+    current_year = ''
+    cve_list: DefaultDict[str, list] = defaultdict(list)
     for tag in soup.select('div#mainbody > h3, div#mainbody > a'):
         if tag.name == "h3":
             current_year = tag.text.split()[0]
