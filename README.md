@@ -25,7 +25,7 @@ pip install git+https://github.com/dadav/scf
 
 ## 📙 Documentation
 
-👉 Please use [https://scf.readthedocs.io/en/latest/](https://scf.readthedocs.io/en/latest/)
+👉 Please use [https://scf.readthedocs.io/en/stable/](https://scf.readthedocs.io/en/stable/)
 
 ## ⭐️ Usage
 
