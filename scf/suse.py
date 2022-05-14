@@ -7,7 +7,6 @@ from pathlib import Path
 from datetime import timedelta
 from collections import defaultdict
 from requests_cache import CachedSession
-import requests as r
 from bs4 import BeautifulSoup
 from scf.config import settings
 from scf.models import CVE, SimplifiedRating, CVSS, CVSSVector, State, Product
