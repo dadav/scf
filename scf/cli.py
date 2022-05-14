@@ -50,7 +50,8 @@ def config_cmd_init(
         typer.Exit(1)
     os.makedirs(target.parent, exist_ok=True)
 
-    with open(Path(__file__).parent / 'settings.toml', 'rt') as default_config, open(target, 'wt') as target_config:
+    with open(Path(__file__).parent / 'settings.toml', 'rt', encoding='utf-8') as default_config,\
+            open(target, 'wt', encoding='utf-8') as target_config:
         target_config.write(default_config.read())
 
 
@@ -106,7 +107,8 @@ def cache_cmd_stats() -> None:
     typer.echo(f'Location: {path}')
     typer.echo(f'Size: {size}')
     typer.echo(f'Total entries: {all_entries}')
-    typer.echo(f'Expired entries: {expired} ({100/all_entries*expired:.2f}%)')
+    if all_entries > 0:
+        typer.echo(f'Expired entries: {expired} ({100/all_entries*expired:.2f}%)')
 
 
 @cache_cmd.command("populate")
