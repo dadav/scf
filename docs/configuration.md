@@ -30,6 +30,15 @@ Sometime you just want to know what the current settings are:
 scf config dump
 ```
 
+## Changing the configuration
+
+You can simply run the following command which will open your favorite editor
+with the configuration file:
+
+```bash
+scf config edit
+```
+
 ## Autocompletion
 
 To install the autocompletion for your shell, you have to run the following command:
