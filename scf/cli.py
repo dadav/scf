@@ -5,6 +5,7 @@ from multiprocessing import Pool
 from typing import Optional, cast
 from datetime import datetime
 from pathlib import Path
+from subprocess import call
 
 import typer
 import toml
@@ -61,6 +62,18 @@ def config_cmd_dump():
     Dumps the current config
     """
     typer.echo(toml.dumps(settings.as_dict()))
+
+
+@config_cmd.command("edit")
+def config_cmd_edit():
+    """
+    Edit the current config
+    """
+    config = Path.home() / '.config' / 'scf' / 'settings.toml'
+    if not config.exists():
+        config_cmd_init()
+    editor = os.environ.get('EDITOR', 'vim')
+    typer.Exit(call([editor, config]))
 
 
 @server_cmd.command("run")
