@@ -1,6 +1,7 @@
 import os
 import json
 import re
+from time import sleep
 from multiprocessing import Pool
 from typing import Optional, cast, Dict, List, Union
 from datetime import datetime
@@ -15,6 +16,8 @@ from scf.suse import get_cve_details, list_cve_by_year, get_all_cve, prefetch_cv
 from rich import print
 from rich.progress import Progress
 from rich.tree import Tree
+from rich.live import Live
+from rich.table import Table
 from scf.suse import Cache
 from scf.utils import find_by_path, file_size
 from requests_cache.backends.sqlite import SQLiteCache
@@ -163,6 +166,50 @@ def cve_cmd_details(
         typer.echo(details.json())
     else:
         print(details.tree())
+
+
+@cve_cmd.command("watch")
+def cve_cmd_watch(
+        interval: int = typer.Option(30, '-i', '--interval', help='Set the refresh interval'),) -> None:
+    """
+    Show the latest CVE as they get published
+    """
+    table = Table()
+    table.add_column('Time')
+    table.add_column('CVE')
+    table.add_column('Rating')
+    table.add_column('Score')
+
+    last_cve = None
+
+    with Live(table, auto_refresh=False) as live:
+        while True:
+            try:
+                all_cve = get_all_cve()
+                new_cve = []
+
+                if last_cve is None:
+                    last_cve = all_cve[0]
+                    new_cve.append(last_cve)
+                else:
+                    while all_cve[0] != last_cve:
+                        new_cve.append(all_cve[0])
+                        all_cve.pop()
+
+                for cve in reversed(new_cve):
+                    cve_data = get_cve_details(cve)
+                    rating = cve_data.simplified_rating or 'Unknown'
+
+                    if cve_data.cvss is not None and cve_data.cvss.score is not None:
+                        score = str(cve_data.cvss.score)
+                    else:
+                        score = 'Unknown'
+
+                    table.add_row(datetime.now().strftime('%Y/%m/%d %H:%M:%S'), cve, rating, score)
+                    live.update(table, refresh=True)
+                sleep(interval)
+            except KeyboardInterrupt:
+                break
 
 
 @cve_cmd.command("list")
