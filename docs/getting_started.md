@@ -52,8 +52,7 @@ Ok great, now we want only the base score:
 You can even start a small API server:
 
 ```bash
-# start a small api server
-scf server
+scf server run
 ```
 
 ## Usage in python
@@ -61,6 +60,6 @@ scf server
 ```python
 from scf.suse import get_cve_details
 
-details = get_cve_details('CVE-2022-0001')
+details = get_cve_details('CVE-2022-44832')
 print(f'CVE Score: {details.cvss.score}')
 ```
