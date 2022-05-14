@@ -17,6 +17,7 @@ includehidden:
 
 getting_started
 configuration
+cache
 ```
 
 ```{note}

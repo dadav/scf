@@ -2,6 +2,7 @@
 
 _scf_ can also be configured via a configuration file, which is included in the package.
 
+(default-config)=
 ## Defaults
 
 ```{literalinclude} ../scf/settings.toml
