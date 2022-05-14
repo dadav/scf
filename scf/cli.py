@@ -2,7 +2,7 @@ import os
 import json
 import re
 from multiprocessing import Pool
-from typing import Optional, cast
+from typing import Optional, cast, Dict, List, Union
 from datetime import datetime
 from pathlib import Path
 from subprocess import call
@@ -110,11 +110,11 @@ def cache_cmd_stats() -> None:
     """
     with Progress(transient=True) as progress:
         progress.add_task('Collecting data...', total=None)
-        c = cast(SQLiteCache, Cache.instance().cache)
-        path = Path(c.db_path)
+        cache = cast(SQLiteCache, Cache.instance().cache)
+        path = Path(cache.db_path)
         size = file_size(path)
-        all_entries = c.response_count()
-        not_expired = c.response_count(check_expiry=True)
+        all_entries = cache.response_count()
+        not_expired = cache.response_count(check_expiry=True)
         expired = all_entries - not_expired
 
     typer.echo(f'Location: {path}')
@@ -126,7 +126,8 @@ def cache_cmd_stats() -> None:
 
 @cache_cmd.command("populate")
 def cache_cmd_populate(
-        cve_filter: str = typer.Option(f'CVE-{datetime.now().year}-.*', '--filter', help="Regex to apply on the CVEs to fetch.")) -> None:
+        cve_filter: str = typer.Option(f'CVE-{datetime.now().year}-.*',
+                                       '--filter', help="Regex to apply on the CVEs to fetch."),) -> None:
     """
     Prefetch all the cve data
     """
@@ -172,6 +173,7 @@ def cve_cmd_list(
     """
     Fetch the known cve for a given year or all.
     """
+    cves: Union[Dict, List] = []
 
     if year:
         cves = list_cve_by_year(use_cache=use_cache)
@@ -181,16 +183,16 @@ def cve_cmd_list(
     if use_json:
         typer.echo(json.dumps(cves))
     else:
-        t = Tree('CVE')
+        tree = Tree('CVE')
         if isinstance(cves, dict):
             for cve_year, cve_list in cves.items():
-                t_y = t.add(cve_year)
+                t_y = tree.add(cve_year)
                 for cve in cve_list:
                     t_y.add(cve)
         else:
             for cve in cves:
-                t.add(cve)
-        print(t)
+                tree.add(cve)
+        print(tree)
 
 
 @app.callback()
