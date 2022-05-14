@@ -1,7 +1,7 @@
 ![PyPI - License](https://img.shields.io/pypi/l/python-scf)
 [![Current version on PyPI](https://img.shields.io/pypi/v/python-scf)](https://pypi.org/project/python-scf/)
 [![Lint/Build](https://github.com/dadav/scf/actions/workflows/build.yaml/badge.svg)](https://github.com/dadav/scf/actions/)
-[![Coverege](https://codecov.io/gh/dadav/scf/branch/main/graph/badge.svg?token=XAM1MHF3NC)](https://codecov.io/gh/dadav/scf)
+[![codecov](https://codecov.io/gh/dadav/scf/branch/main/graph/badge.svg?token=WPTU0RWTZ6)](https://codecov.io/gh/dadav/scf)
 
 ![Homedir](./img/scf.png)
 
