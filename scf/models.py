@@ -167,36 +167,36 @@ class CVSSVector(BaseModel):  # pylint: disable=too-few-public-methods
         """
         Creates a pretty rich tree object
         """
-        t = Tree('Vector')
+        t = Tree('[light_slate_blue]Vector')
 
-        t_r = t.add('Raw')
+        t_r = t.add('[sky_blue2]Raw')
         t_r.add(self.raw)
 
-        t_av = t.add('Access Vector')
+        t_av = t.add('[sky_blue2]Access Vector')
         t_av.add(self.access_vector)
 
-        t_ac = t.add('Access Complexity')
+        t_ac = t.add('[sky_blue2]Access Complexity')
         t_ac.add(self.access_complexity)
 
-        t_pr = t.add('Privileges Required')
+        t_pr = t.add('[sky_blue2]Privileges Required')
         t_pr.add(self.privileges_required)
 
-        t_ui = t.add('User Interaction')
+        t_ui = t.add('[sky_blue2]User Interaction')
         t_ui.add(self.user_interaction)
 
-        t_s = t.add('Scope')
+        t_s = t.add('[sky_blue2]Scope')
         t_s.add(self.scope)
 
-        t_ci = t.add('Confidentiality Impact')
+        t_ci = t.add('[sky_blue2]Confidentiality Impact')
         t_ci.add(self.confidentiality_impact)
 
-        t_ii = t.add('Integrity Impact')
+        t_ii = t.add('[sky_blue2]Integrity Impact')
         t_ii.add(self.integrity_impact)
 
-        t_ai = t.add('Availability Impact')
+        t_ai = t.add('[sky_blue2]Availability Impact')
         t_ai.add(self.availability_impact)
 
-        t_v = t.add('Version')
+        t_v = t.add('[sky_blue2]Version')
         t_v.add(self.version)
 
         return t
@@ -225,14 +225,14 @@ class CVSS(BaseModel):  # pylint: disable=too-few-public-methods
         """
         Creates a pretty rich tree object
         """
-        t = Tree('CVSS')
+        t = Tree('[slate_blue1]CVSS')
 
-        t_s = t.add('Score')
+        t_s = t.add('[light_slate_blue]Score')
         t_s.add(str(self.score))
 
         t.add(self.vector.tree())
 
-        t_v = t.add('Version')
+        t_v = t.add('[light_slate_blue]Version')
         t_v.add(self.version)
 
         return t
@@ -265,22 +265,22 @@ class CVE(BaseModel):  # pylint: disable=too-few-public-methods
         """
         Creates a pretty rich tree object
         """
-        t = Tree(self.name)
-        t_d = t.add('Description')
+        t = Tree(f'[sea_green3]{self.name}')
+        t_d = t.add('[slate_blue1]Description')
         t_d.add(self.description)
 
-        t_u = t.add('Url')
+        t_u = t.add('[slate_blue1]Url')
         t_u.add(self.url)
 
         if self.cvss:
             t.add(self.cvss.tree())
 
         if self.simplified_rating:
-            t_s = t.add('Simplified Rating')
+            t_s = t.add('[slate_blue1]Simplified Rating')
             t_s.add(self.simplified_rating.pretty())
 
         if self.affected_products:
-            t_p = t.add('Products')
+            t_p = t.add('[slate_blue1]Products')
             for p in self.affected_products:
                 t_p.add(p.tree())
 
