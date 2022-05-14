@@ -64,8 +64,6 @@ print(f'[{latest_cve}] Score: {details.cvss.score}')
 
 ## 💓 Contributors
 
-<a href="https://github.com/dadav/scf/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=dadav/scf" />
-</a>
+<img src="https://contrib.rocks/image?repo=dadav/scf" />
 
 > Made with [contributors-img](https://contrib.rocks).
