@@ -4,7 +4,7 @@ name: Deploy
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*!-rc*'
 
 jobs:
   deploy:
