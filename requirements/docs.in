@@ -4,4 +4,3 @@ sphinxcontrib-log-cabinet
 sphinxcontrib-programoutput
 sphinx_copybutton
 myst-parser
-sphinx-autoapi

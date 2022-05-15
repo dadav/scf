@@ -5,12 +5,9 @@
 hidden:
 ---
 
-python
-api_server
+module
 ```
 
-There are multiple ways you can make use of the _scf_ functionality.
-Two of them are via the [python api](python-code) and via the [api server](api-server).
+Checkout the auto generated docs for _scf_.
 
-- {doc}`Usage in python <./python>`
-- {doc}`API server <./api_server>`
+- {doc}`Module Autodocs <./module>`
