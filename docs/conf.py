@@ -33,7 +33,7 @@ version = release
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
+    'autoapi.extension',
     'sphinx.ext.coverage',
     'sphinxcontrib.programoutput',
     'sphinx_copybutton',
@@ -102,3 +102,7 @@ html_static_path = ['_static']
 
 # -- Options for copybutton
 copybutton_prompt_text = "$ "
+
+# -- Options for autoapi
+autoapi_dirs = ['../scf']
+autoapi_root = 'api/python'
