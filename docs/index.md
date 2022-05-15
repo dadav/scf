@@ -17,9 +17,18 @@ includehidden:
 
 getting_started
 cli/index
-api/index
 configuration
 cache
+```
+
+```{toctree}
+---
+caption: Development
+maxdepth: 3
+includehidden:
+---
+
+api/index
 ```
 
 ```{toctree}
