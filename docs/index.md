@@ -16,8 +16,20 @@ includehidden:
 ---
 
 getting_started
+cli/index
+api/index
 configuration
 cache
+```
+
+```{toctree}
+---
+hidden:
+caption: Project Links
+---
+
+GitHub <https://github.com/dadav/scf>
+PyPI <https://pypi.org/project/python-scf>
 ```
 
 ```{note}

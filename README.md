@@ -41,6 +41,9 @@ scf cve list --json
 # fetch details for a specific cve
 scf cve details CVE-2022-0001
 
+# watch for new CVE
+scf cve watch
+
 # start a little api server
 scf server run
 

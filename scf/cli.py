@@ -6,7 +6,7 @@ from multiprocessing import Pool
 from typing import Optional, cast, Dict, List, Union
 from datetime import datetime
 from pathlib import Path
-from subprocess import call
+from subprocess import call, Popen, DEVNULL
 
 import typer
 import toml
@@ -51,7 +51,7 @@ def config_cmd_init(
     target = Path.home() / '.config' / 'scf' / 'settings.toml'
     if target.exists() and not overwrite:
         typer.echo(f'Config already exists ({target})', err=True)
-        typer.Exit(1)
+        raise typer.Exit(1)
     os.makedirs(target.parent, exist_ok=True)
 
     with open(Path(__file__).parent / 'settings.toml', 'rt', encoding='utf-8') as default_config,\
@@ -76,7 +76,7 @@ def config_cmd_edit():
     if not config.exists():
         config_cmd_init()
     editor = os.environ.get('EDITOR', 'vim')
-    typer.Exit(call([editor, config]))
+    raise typer.Exit(call([editor, config]))
 
 
 @server_cmd.command("run")
@@ -170,10 +170,20 @@ def cve_cmd_details(
 
 @cve_cmd.command("watch")
 def cve_cmd_watch(
+        command: str = typer.Option(None, '-c', '--command', help='Run this command if a new CVE is found'),
+        test: bool = typer.Option(False, '-t', '--test', help='Test the command and exit'),
         interval: int = typer.Option(30, '-i', '--interval', help='Set the refresh interval'),) -> None:
     """
     Show the latest CVE as they get published
     """
+    if test and not command:
+        typer.echo('Give me a command.', err=True)
+        raise typer.Exit(1)
+    elif test:
+        rc = call([command], shell=True, stdout=DEVNULL)
+        typer.echo(f'Executed command. RC = {rc}')
+        raise typer.Exit(0)
+
     table = Table()
     table.add_column('Time')
     table.add_column('CVE')
@@ -181,6 +191,7 @@ def cve_cmd_watch(
     table.add_column('Score')
 
     last_cve = None
+    first = True
 
     with Live(table, auto_refresh=False) as live:
         while True:
@@ -207,7 +218,10 @@ def cve_cmd_watch(
 
                     table.add_row(datetime.now().strftime('%Y/%m/%d %H:%M:%S'), cve, rating, score)
                     live.update(table, refresh=True)
+                    if command and not first:
+                        Popen([command], shell=True, stdout=DEVNULL)
                 sleep(interval)
+                first = False
             except KeyboardInterrupt:
                 break
 
@@ -234,7 +248,7 @@ def cve_cmd_list(
         if isinstance(cves, dict):
             for cve_year, cve_list in cves.items():
                 t_y = tree.add(cve_year)
-                for cve in cve_list:
+                for cve in sorted(cve_list, reverse=True):
                     t_y.add(cve)
         else:
             for cve in cves:
