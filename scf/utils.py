@@ -3,6 +3,7 @@ Contains helper functions
 """
 import os
 import operator
+from typing import Tuple
 from pathlib import Path
 from functools import reduce
 
@@ -31,3 +32,11 @@ def file_size(path: Path, human_readable: bool = True) -> str:
         size_in_bytes /= 1024.0
 
     return f'{size_in_bytes:3.1f}Yi'
+
+
+def numeric(cve: str) -> Tuple[int, int]:
+    """
+    Returns a numeric cve number for sorting
+    """
+    year, num = cve[4:].split('-')
+    return (int(year), int(num))

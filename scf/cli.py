@@ -19,7 +19,7 @@ from rich.tree import Tree
 from rich.live import Live
 from rich.table import Table
 from scf.suse import Cache
-from scf.utils import find_by_path, file_size
+from scf.utils import find_by_path, file_size, numeric
 from requests_cache.backends.sqlite import SQLiteCache
 from scf.config import settings
 
@@ -248,7 +248,7 @@ def cve_cmd_list(
         if isinstance(cves, dict):
             for cve_year, cve_list in cves.items():
                 t_y = tree.add(cve_year)
-                for cve in sorted(cve_list, reverse=True):
+                for cve in sorted(cve_list, key=numeric, reverse=True):
                     t_y.add(cve)
         else:
             for cve in cves:

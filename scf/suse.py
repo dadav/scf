@@ -10,6 +10,7 @@ from requests_cache import CachedSession
 from bs4 import BeautifulSoup
 from scf.config import settings
 from scf.models import CVE, SimplifiedRating, CVSS, CVSSVector, State, Product
+from scf.utils import numeric
 
 
 SUSE_CVE_LIST_URL = 'https://www.suse.com/security/cve/index.html'
@@ -75,7 +76,7 @@ def get_all_cve(timeout: int = 30, use_cache: bool = False) -> list:
     Fetches all cves
     """
     by_year = list_cve_by_year(timeout=timeout, use_cache=use_cache)
-    return sorted([cve for ylist in by_year.values() for cve in ylist], reverse=True)
+    return sorted([cve for ylist in by_year.values() for cve in ylist], key=numeric, reverse=True)
 
 
 def prefetch_cve(cve: str, timeout: int = 30) -> str:
