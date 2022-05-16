@@ -5,3 +5,7 @@ path = "@format {env[HOME]}/.cache/"
 expiration_days = 7
 # Never expire the cache for the following CVE. You can use Wildcards here.
 expiration_exceptions = [ "CVE-19*", "CVE-200*", "CVE-201*", ]
+
+[connection]
+# If the certificate should be validated
+ssl_verify = true

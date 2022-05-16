@@ -45,7 +45,7 @@ def url_to_soup(url: str, timeout: int = 30, use_cache: bool = True):
     if not use_cache:
         cache.cache.delete_url(url)
 
-    res = cache.get(url, timeout=timeout)
+    res = cache.get(url, timeout=timeout, verify=settings.connection.ssl_verify)
 
     res.raise_for_status()
 
