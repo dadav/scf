@@ -132,7 +132,7 @@ def cache_cmd_stats() -> None:
 def cache_cmd_populate(
         cve_filter: str = typer.Option(f'CVE-{datetime.now().year}-.*',
                                        '--filter', help="Regex to apply on the CVEs to fetch."),
-        workers: int = typer.Option(os.cpu_count(), '-w', '--workers', help='The number of workers that should be started'),) -> None:
+        workers: int = typer.Option(1, '-w', '--workers', help='The number of workers that should be started'),) -> None:
     """
     Prefetch all the cve data
     """
