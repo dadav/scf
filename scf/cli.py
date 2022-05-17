@@ -1,6 +1,7 @@
 import os
 import json
 import re
+from random import random
 from time import sleep
 from multiprocessing import Pool
 from typing import Optional, cast, Dict, List, Union
@@ -145,6 +146,7 @@ def cache_cmd_populate(
             for cve in pool.imap_unordered(prefetch_cve, cve_list):
                 progress.update(task, description=f'Populating cache...{cve}')
                 progress.advance(task)
+                sleep(random())
 
 
 @cve_cmd.command("details")
