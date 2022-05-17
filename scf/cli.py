@@ -131,7 +131,8 @@ def cache_cmd_stats() -> None:
 @cache_cmd.command("populate")
 def cache_cmd_populate(
         cve_filter: str = typer.Option(f'CVE-{datetime.now().year}-.*',
-                                       '--filter', help="Regex to apply on the CVEs to fetch."),) -> None:
+                                       '--filter', help="Regex to apply on the CVEs to fetch."),
+        workers: int = typer.Option(os.cpu_count(), '-w', '--workers', help='The number of workers that should be started'),) -> None:
     """
     Prefetch all the cve data
     """
@@ -142,7 +143,7 @@ def cache_cmd_populate(
     with Progress(transient=True) as progress:
         task = progress.add_task('Populating cache...', total=len(cve_list))
 
-        with Pool(processes=os.cpu_count()) as pool:
+        with Pool(processes=workers) as pool:
             for cve in pool.imap_unordered(prefetch_cve, cve_list):
                 progress.update(task, description=f'Populating cache...{cve}')
                 progress.advance(task)
