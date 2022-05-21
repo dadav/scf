@@ -192,6 +192,7 @@ def cve_cmd_watch(
     table.add_column('CVE')
     table.add_column('Rating')
     table.add_column('Score')
+    table.add_column('Overall state')
 
     last_cve = None
     first = True
@@ -213,13 +214,14 @@ def cve_cmd_watch(
                 for cve in reversed(new_cve):
                     cve_data = get_cve_details(cve)
                     rating = cve_data.simplified_rating or 'Unknown'
+                    overall = cve_data.overall_state or 'Unknown'
 
                     if cve_data.cvss is not None and cve_data.cvss.score is not None:
                         score = str(cve_data.cvss.score)
                     else:
                         score = 'Unknown'
 
-                    table.add_row(datetime.now().strftime('%Y/%m/%d %H:%M:%S'), cve, rating, score)
+                    table.add_row(datetime.now().strftime('%Y/%m/%d %H:%M:%S'), cve, rating, score, overall)
                     live.update(table, refresh=True)
                     if command and not first:
                         Popen([command], shell=True, stdout=DEVNULL)

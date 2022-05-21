@@ -9,6 +9,36 @@ from rich.tree import Tree
 from fastapi.encoders import jsonable_encoder
 
 
+class OverallState(str, Enum):
+    """
+    Overall state by Suse: https://www.suse.com/c/cve-pages-self-help-security-issues-suse-linux-enterprise/
+    """
+    RESOLVED = 'RESOLVED'
+    DOES = 'DOES_NOT_AFFECT_SUSE'
+    PENDING = 'PENDING'
+    RUNNING = 'RUNNING'
+    ANALYSIS = 'ANALYSIS'
+    NEW = 'NEW'
+    POSTBONED = 'POSTBONED'
+    IGNORE = 'IGNORE'
+
+    def pretty(self):
+        """
+        Returns the colorized enum value
+        """
+        color = {
+            'RESOLVED': 'green',
+            'DOES_NOT_AFFECT_SUSE': 'green',
+            'PENDING': 'yellow',
+            'RUNNING': 'slate_blue1',
+            'ANALYSIS': 'slate_blue1',
+            'NEW': 'slate_blue1',
+            'POSTBONED': 'slate_blue1',
+            'IGNORE': 'green',
+        }[self.name]
+        return f'[{color}]{self.value}[/{color}]'
+
+
 class SimplifiedRating(str, Enum):
     """
     Simplified Rating by Suse: https://www.suse.com/support/security/rating/
@@ -245,6 +275,7 @@ class CVE(BaseModel):  # pylint: disable=too-few-public-methods
     name: str
     description: str
     url: str
+    overall_state: Optional[OverallState]
     cvss: Optional[CVSS]
     simplified_rating: Optional[SimplifiedRating]
     affected_products: Optional[List[Product]]
@@ -271,6 +302,10 @@ class CVE(BaseModel):  # pylint: disable=too-few-public-methods
 
         t_u = t.add('[slate_blue1]Url')
         t_u.add(self.url)
+
+        if self.overall_state:
+            t_os = t.add('[slate_blue1]Overall state')
+            t_os.add(self.overall_state.pretty())
 
         if self.cvss:
             t.add(self.cvss.tree())
