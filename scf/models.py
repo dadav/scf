@@ -21,6 +21,7 @@ class OverallState(str, Enum):
     NEW = 'NEW'
     POSTBONED = 'POSTBONED'
     IGNORE = 'IGNORE'
+    REVISIT = 'REVISIT'
 
     def pretty(self):
         """
@@ -32,6 +33,7 @@ class OverallState(str, Enum):
             'PENDING': 'yellow',
             'RUNNING': 'slate_blue1',
             'ANALYSIS': 'slate_blue1',
+            'REVISIT': 'slate_blue1',
             'NEW': 'slate_blue1',
             'POSTBONED': 'slate_blue1',
             'IGNORE': 'green',
@@ -74,6 +76,7 @@ class State(str, Enum):
     ALREADY_FIXED = 'ALREADY_FIXED'
     ANALYSIS = 'ANALYSIS'
     ASK_MAINTAINER = 'ASK_MAINTAINER'
+    IGNORE = 'IGNORE'
 
     def pretty(self):
         """
@@ -83,6 +86,7 @@ class State(str, Enum):
             'NOT_AFFECTED': 'green',
             'ALREADY_FIXED': 'green',
             'RELEASED': 'green',
+            'IGNORE': 'green',
             'UNSUPPORTED': 'orange_red1',
             'IN_PROGRESS': 'slate_blue1',
             'AFFECTED': 'red1',
