@@ -10,13 +10,43 @@ jobs:
   deploy:
     name: Deploy to pypi.org
     runs-on: ubuntu-latest
+    permissions: write-all
+    outputs:
+      release_body: ${{ steps.release.outputs.RELEASE_BODY }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v2
         with:
           python-version: 3.9
       - run: python -m pip install --upgrade pip wheel setuptools build twine
       - run: python -m build
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v1
+        id: git-cliff
+        with:
+          config: cliff.toml
+          args: -vv --latest --strip header
+        env:
+          OUTPUT: CHANGES.md
+      - name: Set the release body
+        id: release
+        shell: bash
+        run: |
+          r=$(cat ${{ steps.git-cliff.outputs.changelog }})
+          r="${r//'%'/'%25'}"     # Multiline escape sequences for %
+          r="${r//$'\n'/'%0A'}"   # Multiline escape sequences for '\n'
+          r="${r//$'\r'/'%0D'}"   # Multiline escape sequences for '\r'
+          echo "::set-output name=RELEASE_BODY::$r"
+      - name: Modify the release page
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: dist/*.whl
+          file_glob: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          body: ${{ steps.release.outputs.RELEASE_BODY }}
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:

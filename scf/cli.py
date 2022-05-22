@@ -8,10 +8,12 @@ from typing import Optional, cast, Dict, List, Union
 from datetime import datetime
 from pathlib import Path
 from subprocess import call, Popen, DEVNULL
+from collections import defaultdict
 
 import typer
 import toml
 from scf import __version__
+from scf.models import OverallState
 from scf.server import run as server_start
 from scf.suse import get_cve_details, list_cve_by_year, get_all_cve, prefetch_cve
 from rich import print
@@ -233,7 +235,9 @@ def cve_cmd_watch(
 
 @cve_cmd.command("list")
 def cve_cmd_list(
-        year: bool = typer.Option(False, '-y', '--year', help='List cve grouped by year.'),
+        grouped: bool = typer.Option(False, '--grouped-by-year', help='List cve grouped by year.'),
+        year: int = typer.Option(None, '-y', '--year', help='List cve for a specific year.'),
+        unresolved: bool = typer.Option(False, '-u', '--unresolved-only', help='Only print cve which are not resolved yet.'),
         use_cache: bool = typer.Option(False, '--cache', help='Enables the cache.'),
         use_json: bool = typer.Option(False, '--json', help='Print the result as json.'),) -> None:
     """
@@ -241,10 +245,30 @@ def cve_cmd_list(
     """
     cves: Union[Dict, List] = []
 
-    if year:
+    if grouped:
         cves = list_cve_by_year(use_cache=use_cache)
+    elif year is not None:
+        cves = list_cve_by_year(use_cache=use_cache)[str(year)]
     else:
         cves = get_all_cve(use_cache=use_cache)
+
+    # apply the filters
+    if unresolved:
+        if isinstance(cves, dict):
+            filtered = defaultdict()
+            for cve_year, cve_list in cves.items():
+                for cve in cve_list:
+                    details = get_cve_details(cve, use_cache=True)
+                    if details.overall_state != OverallState.RESOLVED:
+                        filtered[cve_year].append(cve)
+        else:
+            filtered = []
+            for cve in cves:
+                details = get_cve_details(cve, use_cache=True)
+                if details.overall_state != OverallState.RESOLVED:
+                    filtered.append(cve)
+
+        cves = filtered
 
     if use_json:
         typer.echo(json.dumps(cves))
