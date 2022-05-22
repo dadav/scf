@@ -9,7 +9,7 @@ from collections import defaultdict
 from requests_cache import CachedSession
 from bs4 import BeautifulSoup
 from scf.config import settings
-from scf.models import CVE, SimplifiedRating, CVSS, CVSSVector, State, Product
+from scf.models import CVE, SimplifiedRating, CVSS, CVSSVector, State, Product, OverallState
 from scf.utils import numeric
 
 
@@ -45,7 +45,12 @@ def url_to_soup(url: str, timeout: int = 30, use_cache: bool = True):
     if not use_cache:
         cache.cache.delete_url(url)
 
-    res = cache.get(url, timeout=timeout, verify=settings.connection.ssl_verify)
+    user_agent = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0'}
+
+    res = cache.get(url,
+                    headers=user_agent,
+                    timeout=timeout,
+                    verify=settings.connection.ssl_verify)
 
     res.raise_for_status()
 
@@ -102,6 +107,11 @@ def get_cve_details(cve: str, timeout: int = 30, use_cache: bool = True) -> CVE:
     # parse description
     description_header_tag = soup.select_one('div#mainbody > h4:-soup-contains("Description")')
     data['description'] = description_header_tag.next_sibling.text.strip('\n')
+
+    # parse overall state
+    match = re.search(r"Overall state of this security issue: (\w+)", soup.text)
+    if match:
+        data['overall_state'] = OverallState[match.groups()[0].upper().replace(' ', '_')]
 
     # parse suse rating
     match = re.search(r"This issue is currently rated as having (\w+) severity", soup.text)

@@ -1,6 +1,7 @@
 import os
 import json
 import re
+from random import random
 from time import sleep
 from multiprocessing import Pool
 from typing import Optional, cast, Dict, List, Union
@@ -130,7 +131,8 @@ def cache_cmd_stats() -> None:
 @cache_cmd.command("populate")
 def cache_cmd_populate(
         cve_filter: str = typer.Option(f'CVE-{datetime.now().year}-.*',
-                                       '--filter', help="Regex to apply on the CVEs to fetch."),) -> None:
+                                       '--filter', help="Regex to apply on the CVEs to fetch."),
+        workers: int = typer.Option(1, '-w', '--workers', help='The number of workers that should be started'),) -> None:
     """
     Prefetch all the cve data
     """
@@ -141,10 +143,11 @@ def cache_cmd_populate(
     with Progress(transient=True) as progress:
         task = progress.add_task('Populating cache...', total=len(cve_list))
 
-        with Pool(processes=os.cpu_count()) as pool:
+        with Pool(processes=workers) as pool:
             for cve in pool.imap_unordered(prefetch_cve, cve_list):
                 progress.update(task, description=f'Populating cache...{cve}')
                 progress.advance(task)
+                sleep(random())
 
 
 @cve_cmd.command("details")
@@ -189,6 +192,7 @@ def cve_cmd_watch(
     table.add_column('CVE')
     table.add_column('Rating')
     table.add_column('Score')
+    table.add_column('Overall state')
 
     last_cve = None
     first = True
@@ -210,13 +214,14 @@ def cve_cmd_watch(
                 for cve in reversed(new_cve):
                     cve_data = get_cve_details(cve)
                     rating = cve_data.simplified_rating or 'Unknown'
+                    overall = cve_data.overall_state or 'Unknown'
 
                     if cve_data.cvss is not None and cve_data.cvss.score is not None:
                         score = str(cve_data.cvss.score)
                     else:
                         score = 'Unknown'
 
-                    table.add_row(datetime.now().strftime('%Y/%m/%d %H:%M:%S'), cve, rating, score)
+                    table.add_row(datetime.now().strftime('%Y/%m/%d %H:%M:%S'), cve, rating, score, overall)
                     live.update(table, refresh=True)
                     if command and not first:
                         Popen([command], shell=True, stdout=DEVNULL)
