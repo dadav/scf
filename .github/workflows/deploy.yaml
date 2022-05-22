@@ -10,6 +10,7 @@ jobs:
   deploy:
     name: Deploy to pypi.org
     runs-on: ubuntu-latest
+    permissions: write-all
     outputs:
       release_body: ${{ steps.release.outputs.RELEASE_BODY }}
     steps:
