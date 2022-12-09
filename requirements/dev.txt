@@ -22,15 +22,15 @@ babel==2.11.0
     # via sphinx
 beautifulsoup4==4.11.1
     # via
-    #   -r requirements/../requirements.in
+    #   -r ../requirements.in
     #   furo
 build==0.9.0
     # via
-    #   -r requirements/build.in
+    #   -r build.in
     #   pip-tools
 cattrs==22.2.0
     # via requests-cache
-certifi==2022.9.24
+certifi==2022.12.7
     # via
     #   httpcore
     #   httpx
@@ -53,21 +53,17 @@ docutils==0.19
     #   myst-parser
     #   sphinx
 dynaconf==3.1.11
-    # via -r requirements/../requirements.in
-exceptiongroup==1.0.4
-    # via
-    #   cattrs
-    #   pytest
+    # via -r ../requirements.in
 fastapi==0.88.0
-    # via -r requirements/../requirements.in
+    # via -r ../requirements.in
 filelock==3.8.0
     # via
     #   tox
     #   virtualenv
 flake8==6.0.0
-    # via -r requirements/style.in
+    # via -r style.in
 furo==2022.9.29
-    # via -r requirements/docs.in
+    # via -r docs.in
 h11==0.14.0
     # via
     #   httpcore
@@ -77,7 +73,7 @@ httpcore==0.16.2
 httptools==0.5.0
     # via uvicorn
 httpx==0.23.1
-    # via -r requirements/tests.in
+    # via -r tests.in
 idna==3.4
     # via
     #   anyio
@@ -104,7 +100,7 @@ mdit-py-plugins==0.3.1
 mdurl==0.1.2
     # via markdown-it-py
 myst-parser==0.18.1
-    # via -r requirements/docs.in
+    # via -r docs.in
 packaging==21.3
     # via
     #   build
@@ -114,7 +110,7 @@ packaging==21.3
 pep517==0.13.0
     # via build
 pip-tools==6.10.0
-    # via -r requirements/dev.in
+    # via -r dev.in
 platformdirs==2.5.4
     # via virtualenv
 pluggy==1.0.0
@@ -127,7 +123,7 @@ pycodestyle==2.10.0
     # via flake8
 pydantic==1.10.2
     # via
-    #   -r requirements/../requirements.in
+    #   -r ../requirements.in
     #   fastapi
 pyflakes==3.0.1
     # via flake8
@@ -140,13 +136,13 @@ pyparsing==3.0.9
     # via packaging
 pytest==7.2.0
     # via
-    #   -r requirements/tests.in
+    #   -r tests.in
     #   pytest-cov
 pytest-cov==4.0.0
-    # via -r requirements/tests.in
+    # via -r tests.in
 python-dotenv==0.21.0
     # via
-    #   -r requirements/../requirements.in
+    #   -r ../requirements.in
     #   uvicorn
 pytz==2022.6
     # via babel
@@ -156,15 +152,15 @@ pyyaml==6.0
     #   uvicorn
 requests==2.28.1
     # via
-    #   -r requirements/../requirements.in
+    #   -r ../requirements.in
     #   requests-cache
     #   sphinx
 requests-cache==0.9.7
-    # via -r requirements/../requirements.in
+    # via -r ../requirements.in
 rfc3986[idna2008]==1.5.0
     # via httpx
 rich==12.6.0
-    # via -r requirements/../requirements.in
+    # via -r ../requirements.in
 six==1.16.0
     # via
     #   tox
@@ -180,7 +176,7 @@ soupsieve==2.3.2.post1
     # via beautifulsoup4
 sphinx==5.3.0
     # via
-    #   -r requirements/docs.in
+    #   -r docs.in
     #   furo
     #   myst-parser
     #   sphinx-basic-ng
@@ -190,7 +186,7 @@ sphinx==5.3.0
 sphinx-basic-ng==1.0.0b1
     # via furo
 sphinx-copybutton==0.5.1
-    # via -r requirements/docs.in
+    # via -r docs.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
 sphinxcontrib-devhelp==1.0.2
@@ -200,9 +196,9 @@ sphinxcontrib-htmlhelp==2.0.0
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
 sphinxcontrib-log-cabinet==1.0.1
-    # via -r requirements/docs.in
+    # via -r docs.in
 sphinxcontrib-programoutput==0.17
-    # via -r requirements/docs.in
+    # via -r docs.in
 sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.5
@@ -210,18 +206,11 @@ sphinxcontrib-serializinghtml==1.1.5
 starlette==0.22.0
     # via fastapi
 toml==0.10.2
-    # via -r requirements/../requirements.in
-tomli==2.0.1
-    # via
-    #   build
-    #   coverage
-    #   pep517
-    #   pytest
-    #   tox
+    # via -r ../requirements.in
 tox==3.27.1
-    # via -r requirements/dev.in
+    # via -r dev.in
 typer==0.7.0
-    # via -r requirements/../requirements.in
+    # via -r ../requirements.in
 typing-extensions==4.4.0
     # via
     #   myst-parser
@@ -233,7 +222,7 @@ urllib3==1.26.13
     #   requests
     #   requests-cache
 uvicorn[standard]==0.20.0
-    # via -r requirements/../requirements.in
+    # via -r ../requirements.in
 uvloop==0.17.0
     # via uvicorn
 virtualenv==20.17.0
