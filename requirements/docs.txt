@@ -19,7 +19,7 @@ docutils==0.19
     #   myst-parser
     #   sphinx
 furo==2022.9.29
-    # via -r docs.in
+    # via -r requirements/docs.in
 idna==3.4
     # via requests
 imagesize==1.4.1
@@ -39,10 +39,10 @@ mdit-py-plugins==0.3.1
 mdurl==0.1.2
     # via markdown-it-py
 myst-parser==0.18.1
-    # via -r docs.in
+    # via -r requirements/docs.in
 packaging==21.3
     # via sphinx
-pygments==2.13.0
+pygments==2.15.0
     # via
     #   furo
     #   sphinx
@@ -60,7 +60,7 @@ soupsieve==2.3.2.post1
     # via beautifulsoup4
 sphinx==5.3.0
     # via
-    #   -r docs.in
+    #   -r requirements/docs.in
     #   furo
     #   myst-parser
     #   sphinx-basic-ng
@@ -70,7 +70,7 @@ sphinx==5.3.0
 sphinx-basic-ng==1.0.0b1
     # via furo
 sphinx-copybutton==0.5.1
-    # via -r docs.in
+    # via -r requirements/docs.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
 sphinxcontrib-devhelp==1.0.2
@@ -80,9 +80,9 @@ sphinxcontrib-htmlhelp==2.0.0
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
 sphinxcontrib-log-cabinet==1.0.1
-    # via -r docs.in
+    # via -r requirements/docs.in
 sphinxcontrib-programoutput==0.17
-    # via -r docs.in
+    # via -r requirements/docs.in
 sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.5
