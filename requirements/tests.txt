@@ -8,7 +8,7 @@ anyio==3.6.2
     # via httpcore
 attrs==22.1.0
     # via pytest
-certifi==2022.12.7
+certifi==2023.7.22
     # via
     #   httpcore
     #   httpx
