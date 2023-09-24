@@ -30,8 +30,6 @@ commonmark==0.9.1
     # via rich
 dynaconf==3.1.11
     # via -r requirements.in
-exceptiongroup==1.0.4
-    # via cattrs
 fastapi==0.88.0
     # via -r requirements.in
 h11==0.14.0
@@ -54,7 +52,7 @@ python-dotenv==0.21.0
     #   uvicorn
 pyyaml==6.0
     # via uvicorn
-requests==2.28.1
+requests==2.31.0
     # via
     #   -r requirements.in
     #   requests-cache
