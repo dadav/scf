@@ -117,76 +117,76 @@ class Product(BaseModel):  # pylint: disable=too-few-public-methods
         s.add(self.state.pretty())
         return t
 
+STR2VAR = {
+    'av': {
+        'name': 'access_vector',
+        'values': {
+            'N': 'Network',
+            'A': 'Adjacent',
+            'L': 'Local',
+            'P': 'Physical'
+        }
+    },
+    'ac': {
+        'name': 'access_complexity',
+        'values': {
+            'L': 'Low',
+            'H': 'High',
+        },
+    },
+    'pr': {
+        'name': 'privileges_required',
+        'values': {
+            'N': 'None',
+            'L': 'Low',
+            'H': 'High',
+        },
+    },
+    'ui': {
+        'name': 'user_interaction',
+        'values': {
+            'N': 'None',
+            'R': 'Required',
+        },
+    },
+    's': {
+        'name': 'scope',
+        'values': {
+            'U': 'Unchanged',
+            'C': 'Changed',
+        },
+    },
+    'c': {
+        'name': 'confidentiality_impact',
+        'values': {
+            'H': 'High',
+            'L': 'Low',
+            'N': 'None',
+        },
+    },
+    'i': {
+        'name': 'integrity_impact',
+        'values': {
+            'H': 'High',
+            'L': 'Low',
+            'N': 'None',
+        },
+    },
+    'a': {
+        'name': 'availability_impact',
+        'values': {
+            'H': 'High',
+            'L': 'Low',
+            'N': 'None',
+        },
+    },
+    'cvss': {'name': 'version', 'values': {}},
+}
 
 class CVSSVector(BaseModel):  # pylint: disable=too-few-public-methods
     """
     Contains the parsed vector information
     """
-    STR2VAR: Dict[str, Dict] = {
-        'av': {
-            'name': 'access_vector',
-            'values': {
-                'N': 'Network',
-                'A': 'Adjacent',
-                'L': 'Local',
-                'P': 'Physical'
-            }
-        },
-        'ac': {
-            'name': 'access_complexity',
-            'values': {
-                'L': 'Low',
-                'H': 'High',
-            },
-        },
-        'pr': {
-            'name': 'privileges_required',
-            'values': {
-                'N': 'None',
-                'L': 'Low',
-                'H': 'High',
-            },
-        },
-        'ui': {
-            'name': 'user_interaction',
-            'values': {
-                'N': 'None',
-                'R': 'Required',
-            },
-        },
-        's': {
-            'name': 'scope',
-            'values': {
-                'U': 'Unchanged',
-                'C': 'Changed',
-            },
-        },
-        'c': {
-            'name': 'confidentiality_impact',
-            'values': {
-                'H': 'High',
-                'L': 'Low',
-                'N': 'None',
-            },
-        },
-        'i': {
-            'name': 'integrity_impact',
-            'values': {
-                'H': 'High',
-                'L': 'Low',
-                'N': 'None',
-            },
-        },
-        'a': {
-            'name': 'availability_impact',
-            'values': {
-                'H': 'High',
-                'L': 'Low',
-                'N': 'None',
-            },
-        },
-        'cvss': {'name': 'version', 'values': {}},
-    }
     raw: str
     access_vector: str
     access_complexity: str
@@ -243,7 +243,7 @@ class CVSSVector(BaseModel):  # pylint: disable=too-few-public-methods
         """
         data = {'raw': cvss_str}
         for name, value in [kv.split(':') for kv in cvss_str.split('/')]:
-            lookup = CVSSVector.STR2VAR[name.lower()]
+            lookup = STR2VAR[name.lower()]
             data[lookup['name']] = lookup['values'].get(value, value)
         return CVSSVector(**data)
 
