@@ -137,7 +137,10 @@ def get_cve_details(cve: str, timeout: int = 30, use_cache: bool = True) -> CVE:
         products = []
 
         for row in products_table.select('tr')[1:]:
-            product, source, status = [i.text for i in row.select('td')]
+            try:
+                product, source, status = [i.text for i in row.select('td')]
+            except ValueError:
+                continue
             for single_product in product.split('\n'):
                 products.append(Product(name=single_product, package=source, state=State[status.upper().replace(' ', '_').replace('\'', '_')]))
         data['affected_products'] = products
