@@ -2,7 +2,7 @@
 Contain models used by this package
 """
 import json
-from typing import List, Optional, Dict
+from typing import List, Optional
 from enum import Enum
 from pydantic import BaseModel
 from rich.tree import Tree
@@ -117,6 +117,7 @@ class Product(BaseModel):  # pylint: disable=too-few-public-methods
         s.add(self.state.pretty())
         return t
 
+
 STR2VAR = {
     'av': {
         'name': 'access_vector',
@@ -182,6 +183,7 @@ STR2VAR = {
     },
     'cvss': {'name': 'version', 'values': {}},
 }
+
 
 class CVSSVector(BaseModel):  # pylint: disable=too-few-public-methods
     """
