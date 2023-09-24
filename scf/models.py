@@ -2,7 +2,7 @@
 Contain models used by this package
 """
 import json
-from typing import List, Optional
+from typing import List, Optional, Dict
 from enum import Enum
 from pydantic import BaseModel
 from rich.tree import Tree
@@ -99,7 +99,8 @@ class State(str, Enum):
 
 class Product(BaseModel):  # pylint: disable=too-few-public-methods
     """
-    Contains information about a package that may or maybe not is affected by a given cve
+    Contains information about a package that may or maybe not
+    is affected by a given cve
     """
     name: str
     package: str
@@ -121,7 +122,7 @@ class CVSSVector(BaseModel):  # pylint: disable=too-few-public-methods
     """
     Contains the parsed vector information
     """
-    STR2VAR = {
+    STR2VAR: Dict[str, Dict] = {
         'av': {
             'name': 'access_vector',
             'values': {
