@@ -43,7 +43,7 @@ def url_to_soup(url: str, timeout: int = 30, use_cache: bool = True):
     cache = Cache.instance()
 
     if not use_cache:
-        cache.cache.delete_url(url)
+        cache.cache.delete(urls=[url])
 
     user_agent = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0'}
 

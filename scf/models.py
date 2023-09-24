@@ -121,7 +121,7 @@ class CVSSVector(BaseModel):  # pylint: disable=too-few-public-methods
     """
     Contains the parsed vector information
     """
-    _STR2VAR = {
+    STR2VAR = {
         'av': {
             'name': 'access_vector',
             'values': {
@@ -242,7 +242,7 @@ class CVSSVector(BaseModel):  # pylint: disable=too-few-public-methods
         """
         data = {'raw': cvss_str}
         for name, value in [kv.split(':') for kv in cvss_str.split('/')]:
-            lookup = CVSSVector._STR2VAR[name.lower()]
+            lookup = CVSSVector.STR2VAR[name.lower()]
             data[lookup['name']] = lookup['values'].get(value, value)
         return CVSSVector(**data)
 
