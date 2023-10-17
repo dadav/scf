@@ -87,7 +87,7 @@ typing-extensions==4.8.0
     #   typer
 url-normalize==1.4.3
     # via requests-cache
-urllib3==2.0.5
+urllib3==2.0.7
     # via
     #   requests
     #   requests-cache
